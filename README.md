@@ -27,7 +27,7 @@ Mình sẽ hướng dẫn cách khởi tạo trên Linux Terminal.
     `pip install pycryptodome`
 5. Chạy chương trình:
 
-    `./program`
+    `./Number-Theory/program`
 
 Vậy là bạn đã hoàn tất việc khởi tạo chương trình.
 ## Giải thích phương thức hoạt động

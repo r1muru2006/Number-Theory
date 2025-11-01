@@ -1,20 +1,37 @@
-# Number-Theory
-#### Đề bài
-Viết chương trình (bằng ngôn ngữ C/C++) để thực hiện các yêu cầu sau:
+# Number Theory
+
+## Giới thiệu chương trình
+Chương trình sẽ thực hiện các yêu cầu sau:
 1. Số nguyên tố:
-- Sinh ngẫu nhiên các số nguyên tố có độ dài 2 byte, 8 byte và 32 byte.
-- Kiểm tra số nguyên bất kỳ nhỏ hơn $2^{89}−1$ có phải là số nguyên tố hay không.
+- Sinh ngẫu nhiên các số nguyên tố có độ dài theo byte bất kỳ.
+- Kiểm tra số nguyên bất kỳ có phải là số nguyên tố hay không.
 2. Ước số chung lớn nhất:
-Tính ước số chung lớn nhất của hai số nguyên “lớn” tùy ý (càng lớn càng tốt trong phạm vi chương trình có thể xử lý).
+Tính ước số chung lớn nhất của hai số nguyên “lớn” tùy ý.
 3. Lũy thừa mô-đun:
 Tính giá trị $a^x \mod p$.
-Chương trình phải có khả năng xử lý các trường hợp có số mũ lớn ($x > 40$), ví dụ: $7^{40}
-\mod 19$.
 
-Không sử dụng bất kỳ thư viện cryptography nào.
+## Cách khởi tạo chương trình
+Mình sẽ hướng dẫn cách khởi tạo trên Linux Terminal.
 
-#### Giải
-Ở bài này mình sẽ khai báo thư viện `bigint` để làm việc trên những con số lớn.
+1. Tạo thư mục đặt chương trình, ví dụ là LearnNumber (nếu có sẵn thì bỏ qua bước này)
+
+    `mkdir LearnNumber`
+2. Chuyển tới thư mục đó:
+    
+    `cd LearnNumber`
+3. Clone repository này về:
+
+    `git clone https://github.com/r1muru2006/Number-Theory.git`
+4. Cài thư viện cần thiết:
+
+    `pip install pycryptodome`
+5. Chạy chương trình:
+
+    `./program`
+
+Vậy là bạn đã hoàn tất việc khởi tạo chương trình.
+## Giải thích phương thức hoạt động
+Ở chương trình này mình sẽ khai báo thư viện `bigint` để làm việc trên những con số lớn.
 >Phần 1: Số nguyên tố
 
 Ở mục này, ta cần làm hai bước - 1 là tạo số ngẫu nhiên, 2 là kiểm tra tính nguyên tố.
@@ -27,7 +44,8 @@ bigint randomOddBigint(int bytes) {
     vector<unsigned char> data(bytes);
     for (int i = 0; i < bytes; i++) data[i] = rand() & 0xFF;
 
-    data[0] |= 0x80;
+    if (bytes > 1)
+        data[0] |= 0x80;
     data.back() |= 1;
 
     bigint result = 0;
@@ -102,7 +120,11 @@ bigint genPrime(int bytelength){
         bigint p = randomOddBigint(bytelength);
         bool isComposite = false;
         for (bigint prime : smallPrimes) {
-            // Phép chia bigint % int (shortDivide) RẤT NHANH
+            if (p == prime) {
+                isComposite = false;
+                break;
+            }
+            
             if (p % prime == to_bigint(0)) { 
                 isComposite = true;
                 break;
@@ -144,13 +166,13 @@ for _ in range(3):
 ```
 Ví dụ:
 
-![{AD0003E3-787A-4B20-A7F6-3DA926B26686}](https://hackmd.io/_uploads/Bk07hfmyWe.png)
+![{example1.png}](./example1.png)
 
 Check:
 
-![{2C3CA522-EDB3-450B-88EF-5D4632E346EF}](https://hackmd.io/_uploads/H1FOhM71We.png)
+![{check1.png}](./check1.png)
 
-Full code mình để ở đây: [Github](https://)
+Full code mình để ở đây: [program.cpp](./program.cpp)
 
 >Phần 2: Ước số chung lớn nhất
 
@@ -178,7 +200,7 @@ int main() {
 }
 ```
 Ví dụ:
-![{C77029C3-5D37-4676-9748-260DFD6EF0EE}](https://hackmd.io/_uploads/Hy2PafQJWg.png)
+![{example2.png}](./example2.png)
 
 >Phần 3: Lũy thừa mô-đun
 
@@ -213,5 +235,11 @@ int main() {
     return 0;
 }
 ```
-Mình thấy đề bài yêu cầu còn nhẹ đô =))))))
-![{72311816-E24F-43CB-972A-9391E2F32220}](https://hackmd.io/_uploads/SJKz0GQyWe.png)
+Ví dụ:
+
+![{example3.png}](./example3.png)
+
+## Tham khảo:
+- BigInt (https://github.com/rgroshanrg/bigint)
+- Miller-Rabin in VNOI (https://wiki.vnoi.info/algo/algebra/primality_check.md)
+- Miller-Rabin in Wiki (https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test)

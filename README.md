@@ -200,6 +200,7 @@ int main() {
 }
 ```
 Ví dụ:
+
 ![{example2.png}](./example2.png)
 
 >Phần 3: Lũy thừa mô-đun
